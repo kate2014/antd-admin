@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Table } from 'antd'
 import { request } from '../../utils'
 import lodash from 'lodash'
@@ -51,8 +52,9 @@ class DataTable extends React.Component {
         sortOrder: sorter.order,
         ...filters,
       },
+    }, () => {
+      this.fetch()
     })
-    this.fetch()
   }
 
   fetch = () => {

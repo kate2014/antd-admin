@@ -11,6 +11,8 @@
 
 演示地址 <http://zuiidea.github.io/antd-admin/>
 
+备用地址 <http://47.92.30.98:8000>
+
 ## 特性
 
 -   基于[react](https://github.com/facebook/react)，[ant-design](https://github.com/ant-design/ant-design)，[dva](https://github.com/dvajs/dva)，[Mock](https://github.com/nuysoft/Mock) 企业级后台管理系统最佳实践
@@ -19,34 +21,33 @@
 -   基于[dva](https://github.com/dvajs/dva)动态加载 Model 和路由，按需加载
 -   浅度响应式设计
 
-## To do list
+## 更新日志
 
--   [x] 登录页面
--   [x] dashbord页面
-    -   [x] 数字卡片
-    -   [x] 实时天气卡片
-    -   [x] 图表
--   [x] 用户列表页面
-    -   [x] 增删改查
-    -   [x] 交互动效
--   [x] 扩展UI组件
-    -   [x] IconFont
-    -   [x] DataTable
-    -   [x] Search
-    -   [x] DropOption
-    -   [x] 基于Modal封装的layer方法
--   [x] 加入dva-loading
--   [x] 规范代码: EsLint; 自用[开发配置](assets/standard.md)
--   [ ] 数据可视化页面
--   [ ] 模拟消息收发
--   [ ] 升级dva-cli
+### 4.2
 
-## 开发及构建
+`2017-04-28`
+
+-     修改user相关API使用`Restful`风格
+-     增加user页面多条件查询[#266](https://github.com/zuiidea/antd-admin/issues/226)
+-     修复菜单默认高亮[#201](https://github.com/zuiidea/antd-admin/issues/201)
+
+`2017-04-21`
+
+-     重写Menu，Bread组件及配置文件，[说明](https://github.com/zuiidea/antd-admin/wiki/%E8%8F%9C%E5%8D%95%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+
+### 4.1
+
+`2017-04-14`
+
+-   升级开发工具为[roadhog](https://github.com/sorrycc/roadhog)
+-   使用`roadhog`的mock功能
+-   增强`utils/request.js`跨域处理能力
+
+## 开发构建
 
 ### 目录结构
 
 ```bash
-├── /mock/           # 数据mock的接口文件
 ├── /dist/           # 项目输出目录
 ├── /src/            # 项目源码目录
 │ ├── /components/   # UI组件及UI相关方法
@@ -56,10 +57,11 @@
 │ │ └── app.js       # 路由入口
 │ ├── /models/       # 数据模型
 │ ├── /services/     # 数据接口
+│ ├── /themes/       # 项目样式
+│ ├── /mock/         # 数据mock
 │ ├── /utils/        # 工具函数
 │ │ ├── config.js    # 项目常规配置
-│ │ ├── menu.js      # 侧边菜单配置
-│ │ ├── mock.js      # 数据拦截配置
+│ │ ├── menu.js      # 菜单及面包屑配置
 │ │ ├── config.js    # 项目常规配置
 │ │ ├── request.js   # 异步请求函数
 │ │ └── theme.js     # 项目需要在js中使用到样式变量
@@ -67,7 +69,8 @@
 │ ├── index.js       # 入口文件
 │ └── index.html     
 ├── package.json     # 项目信息
-└── proxy.config.js  # 数据mock配置
+├── .eslintrc        # Eslint配置
+└── .roadhogrc.js    # roadhog配置
 ```
 
 文件夹命名说明:
@@ -88,8 +91,7 @@
 开发：
 
 ```bash
-npm run dev    # 使用mock拦截请求，数据存储在localStroge里
-
+npm run dev
 打开 http://localhost:8000
 ```
 
@@ -106,15 +108,6 @@ npm run build
 ```bash
 npm run lint
 ```
-
-### 注意事项
-
--   生产环境中，已有数据接口，请将`src/utils/index.js`第四行 `require('./mock.js')`注释
--   开发环境中，如再mock目录新增文件，请在`src/utils/mock.js`第二行的`mockData`数组中添加
--   如需重写antd样式配置，请修改`src/theme.js`
--   项目配置文件在`src/utils/config.js`
--   如需重写异步请求函数，请修改`src/utils/request.js`
-    （关于为什么使用axios而不是fetch：在一个无服务器的环境中模拟数据请求，[Mock](https://github.com/nuysoft/Mock)不能拦截Fetch）
 
 ## 参考
 

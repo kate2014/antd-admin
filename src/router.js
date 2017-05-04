@@ -1,12 +1,11 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Router } from 'dva/router'
 import App from './routes/app'
 
-const cached = {}
 const registerModel = (app, model) => {
-  if (!cached[model.namespace]) {
+  if (!(app._models.filter(m => m.namespace === model.namespace).length === 1)) {
     app.model(model)
-    cached[model.namespace] = 1
   }
 }
 
@@ -24,7 +23,6 @@ const Routers = function ({ history, app }) {
       childRoutes: [
         {
           path: 'dashboard',
-          name: 'dashboard',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/dashboard'))
@@ -32,17 +30,31 @@ const Routers = function ({ history, app }) {
             }, 'dashboard')
           },
         }, {
-          path: 'users',
-          name: 'users',
+          path: 'user',
           getComponent (nextState, cb) {
             require.ensure([], require => {
-              registerModel(app, require('./models/users'))
-              cb(null, require('./routes/users/'))
-            }, 'users')
+              registerModel(app, require('./models/user'))
+              cb(null, require('./routes/user/'))
+            }, 'user')
+          },
+        }, {
+          path: 'user/:id',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/user/detail'))
+              cb(null, require('./routes/user/detail/'))
+            }, 'user-detail')
+          },
+        }, {
+          path: 'login',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/login'))
+              cb(null, require('./routes/login/'))
+            }, 'login')
           },
         }, {
           path: 'request',
-          name: 'request',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/request/'))
@@ -50,7 +62,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'UIElement/iconfont',
-          name: 'UIElement/iconfont',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/UIElement/iconfont/'))
@@ -58,7 +69,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'UIElement/search',
-          name: 'UIElement/search',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/UIElement/search/'))
@@ -66,7 +76,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'UIElement/dropOption',
-          name: 'UIElement/dropOption',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/UIElement/dropOption/'))
@@ -74,7 +83,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'UIElement/layer',
-          name: 'UIElement/layer',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/UIElement/layer/'))
@@ -82,7 +90,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'UIElement/dataTable',
-          name: 'UIElement/dataTable',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/UIElement/dataTable/'))
@@ -90,7 +97,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'UIElement/editor',
-          name: 'UIElement/editor',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/UIElement/editor/'))
@@ -98,7 +104,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'chart/lineChart',
-          name: 'chart/lineChart',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/chart/lineChart/'))
@@ -106,7 +111,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'chart/barChart',
-          name: 'chart/barChart',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/chart/barChart/'))
@@ -114,7 +118,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: 'chart/areaChart',
-          name: 'chart/areaChart',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/chart/areaChart/'))
@@ -122,7 +125,6 @@ const Routers = function ({ history, app }) {
           },
         }, {
           path: '*',
-          name: 'error',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/error/'))

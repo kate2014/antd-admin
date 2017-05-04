@@ -1,13 +1,15 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Menu, Icon, Popover } from 'antd'
 import styles from './Header.less'
 import Menus from './Menu'
 
 const SubMenu = Menu.SubMenu
 
-function Header ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys }) {
+function Header ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys, menu }) {
   let handleClickMenu = e => e.key === 'logout' && logout()
   const menusProps = {
+    menu,
     siderFold: false,
     darkTheme: false,
     isNavbar,
@@ -35,10 +37,10 @@ function Header ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVi
           <SubMenu style={{
             float: 'right',
           }} title={< span > <Icon type="user" />
-            {user.name} < /span>}
+            {user.username} < /span>}
           >
             <Menu.Item key="logout">
-              <a>注销</a>
+              Sign out
             </Menu.Item>
           </SubMenu>
         </Menu>
@@ -48,6 +50,7 @@ function Header ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVi
 }
 
 Header.propTypes = {
+  menu: PropTypes.array,
   user: PropTypes.object,
   logout: PropTypes.func,
   switchSider: PropTypes.func,

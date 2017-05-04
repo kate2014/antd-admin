@@ -1,8 +1,9 @@
-import { color } from '../src/utils/theme'
+import { color } from '../utils/theme'
 const Mock = require('mockjs')
-import mockStorge from '../src/utils/mockStorge'
+const config = require('../utils/config')
+const { apiPrefix } = config
 
-let dataKey = mockStorge('Dashboard', Mock.mock({
+const Dashboard = Mock.mock({
   'sales|8': [
     {
       'name|+1': 2008,
@@ -99,31 +100,31 @@ let dataKey = mockStorge('Dashboard', Mock.mock({
   },
   numbers: [
     {
-      icon: 'message',
+      icon: 'pay-circle-o',
       color: color.green,
-      title: '总浏览PV',
+      title: 'Online Review',
       number: 2781,
     }, {
       icon: 'team',
       color: color.blue,
-      title: '总浏览UV',
+      title: 'New Customers',
       number: 3241,
     }, {
-      icon: 'shopping-cart',
+      icon: 'message',
       color: color.purple,
-      title: '成交订单数',
+      title: 'Active Projects',
       number: 253,
     }, {
-      icon: 'pay-circle-o',
+      icon: 'shopping-cart',
       color: color.red,
-      title: '交易额',
+      title: 'Referrals',
       number: 4324,
     },
   ],
-}))
+})
 
 module.exports = {
-  'GET /api/dashboard' (req, res) {
-    res.json(global[dataKey])
+  [`GET ${apiPrefix}/dashboard`] (req, res) {
+    res.json(Dashboard)
   },
 }

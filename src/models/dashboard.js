@@ -79,8 +79,9 @@ let zuimei = {
     return name
   },
 
-  getWeatherByCode (num) {
+  getWeatherByCode (number) {
     let wea = ''
+    let num = Number(number)
     if (num === 0) {
       wea = '晴'
     } else if (num === 1) {
@@ -189,8 +190,8 @@ export default {
   },
   subscriptions: {
     setup ({ dispatch }) {
-      dispatch({ type: 'queryWeather' })
       dispatch({ type: 'query' })
+      dispatch({ type: 'queryWeather' })
     },
   },
   effects: {
@@ -207,7 +208,6 @@ export default {
       const result = yield call(queryWeather, { cityCode: myCityResult.selectCityCode })
       const weather = zuimei.parseActualData(result.data.actual)
       weather.city = myCityResult.selectCityName
-
       yield put({ type: 'queryWeatherSuccess', payload: {
         weather,
       } })

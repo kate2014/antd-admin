@@ -1,8 +1,10 @@
-import { request } from '../utils'
+import { request, config } from '../utils'
+const { api } = config
+const { user, userLogout, userLogin } = api
 
 export async function login (params) {
   return request({
-    url: '/api/login',
+    url: userLogin,
     method: 'post',
     data: params,
   })
@@ -10,15 +12,15 @@ export async function login (params) {
 
 export async function logout (params) {
   return request({
-    url: '/api/logout',
-    method: 'post',
+    url: userLogout,
+    method: 'get',
     data: params,
   })
 }
 
-export async function userInfo (params) {
+export async function query (params) {
   return request({
-    url: '/api/userInfo',
+    url: user.replace('/:id', ''),
     method: 'get',
     data: params,
   })
